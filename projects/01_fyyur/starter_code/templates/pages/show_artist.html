@@ -6,6 +6,7 @@
 		<h1 class="monospace">
 			{{ artist.name }}
 		</h1>
+		<a href="/artists/{{ artist.id }}/edit"><button id="edit-button" class="btn btn-success btn-lg" data-id="{{ artist.id }}">Edit artist</button></a>
 		<p class="subtitle">
 			ID: {{ artist.id }}
 		</p>

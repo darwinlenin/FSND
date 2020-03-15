@@ -6,6 +6,8 @@
 		<h1 class="monospace">
 			{{ venue.name }}
 		</h1>
+		<button id="delete-button" class="btn btn-danger btn-lg" data-id="{{ venue.id }}">Remove venue</button>
+		<a href="/venues/{{ venue.id }}/edit"><button id="edit-button" class="btn btn-success btn-lg" data-id="{{ venue.id }}">Edit venue</button></a>
 		<p class="subtitle">
 			ID: {{ venue.id }}
 		</p>
@@ -74,6 +76,21 @@
 		{% endfor %}
 	</div>
 </section>
+<script>
+const deleteBtns = document.querySelector('#delete-button');
+deleteBtns.onclick = function(e) {
+	const venue_id = e.target.dataset['id'];
+	console.log(venue_id);
+	fetch('/venues/' + venue_id, {
+		method: 'DELETE'
+	})
+	.then(function() {
+		
+	})
+}
+</script>
 
 {% endblock %}
+
+
 
