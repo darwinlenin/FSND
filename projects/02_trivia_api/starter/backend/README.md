@@ -72,9 +72,12 @@ This README is missing documentation of your endpoints. Below is an example for 
 
 Endpoints
 GET '/categories'
-GET ...
-POST ...
-DELETE ...
+GET '/questions'
+DELETE '/questions/<int:question_id>'
+POST '/questions'
+POST '/questions/search'
+GET '/categories/<int:category_id>/questions'
+POST '/quizzes'
 
 GET '/categories'
 - Fetches a dictionary of categories in which the keys are the ids and the value is the corresponding string of the category
@@ -86,6 +89,195 @@ GET '/categories'
 '4' : "History",
 '5' : "Entertainment",
 '6' : "Sports"}
+
+GET '/questions'
+- Fetches a dictionary of questions in which the keys are the ids and the values is the corresponding string of the question, string of the answer, integer of category and integer of difficulty
+- Request Arguments: None
+- Returns: An object with a key, success, that contains a object of boolean: success_boolean key:value pairs a key, a total_questions, that contains a object of id: total_questions_id key:value pairs. And a object of key: questions_array where of this inner array contains a object of question: question_string key:value pairs, answer: answer_string key:value pairs, category: category_id key:value pairs, difficulty: difficulty_id key:value pairs.
+{
+  "questions": [
+    {
+      "answer": "answer",
+      "category": 1,
+      "difficulty": 1,
+      "id": 1,
+      "question": "hello"
+    },
+    {
+      "answer": "second answer",
+      "category": 1,
+      "difficulty": 1,
+      "id": 2,
+      "question": "second question"
+    },
+    {
+      "answer": "four answer",
+      "category": 1,
+      "difficulty": 1,
+      "id": 3,
+      "question": "four question"
+    },
+    {
+      "answer": "In the year 1400",
+      "category": 3,
+      "difficulty": 4,
+      "id": 4,
+      "question": "When discover America?"
+    }
+  ],
+  "success": true,
+  "total_questions": 4
+}
+
+DELETE '/questions/<int:question_id>'
+- Delete a question item in which the keys are the ids is the corresponding string of the question and fetches a dictionary of all questions in which the keys are the ids and the values is the corresponding integer of the deleted item, string of the question, string of the answer, integer of category and integer of difficulty
+- Request Arguments: int:question_id
+- Returns: An object with a key, success, that contains a object of boolean: success_boolean key:value pairs a key, a deleted, that contains a object of id: deleted_id key:value pairs, a key, a total_questions, that contains a object of id: total_questions_id key:value pairs. And a object of key: questions_array where of this inner array contains a object of question: question_string key:value pairs, answer: answer_string key:value pairs, category: category_id key:value pairs, difficulty: difficulty_id key:value pairs.
+{
+  "deleted": 3,
+  "questions": [
+    {
+      "answer": "answer",
+      "category": 1,
+      "difficulty": 1,
+      "id": 1,
+      "question": "hello"
+    },
+    {
+      "answer": "second answer",
+      "category": 1,
+      "difficulty": 1,
+      "id": 2,
+      "question": "second question"
+    },
+    {
+      "answer": "In the year 1400",
+      "category": 3,
+      "difficulty": 4,
+      "id": 4,
+      "question": "When discover America?"
+    }
+  ],
+  "success": true,
+  "total_questions": 3
+}
+
+POST '/questions'
+- Fetches a dictionary of questions in which the keys are the ids and the values is the corresponding string of the question, string of the answer, integer of category and integer of difficulty
+- Request Arguments: An object with a key, question, answer, category, difficulty, that contains a object of question: question_string key:value pairs, answer: answer_string key:value pairs, category: category_id key:value pairs, difficulty: difficulty_id key:value pairs.  
+- Returns: An object with a success key that contains a key:success_boolean and a single total_questions element, that contains a object of key: total_questions_string key:value pairs a object of key: questions_array where of this inner array contains a object of question: question_string key:value pairs, answer: answer_string key:value pairs, category: category_id key:value pairs, difficulty: difficulty_id key:value pairs.
+{
+  "questions": [
+    {
+      "answer": "answer",
+      "category": 1,
+      "difficulty": 1,
+      "id": 1,
+      "question": "hello"
+    },
+    {
+      "answer": "second answer",
+      "category": 1,
+      "difficulty": 1,
+      "id": 2,
+      "question": "second question"
+    },
+    {
+      "answer": "In the year 1400",
+      "category": 3,
+      "difficulty": 4,
+      "id": 3,
+      "question": "When discover America?"
+    },
+    {
+      "answer": "Thomas Edison",
+      "category": 6,
+      "difficulty": 2,
+      "id": 4,
+      "question": "Who invent the incandescent bulb?"
+    }
+  ],
+  "success": true,
+  "total_questions": 4
+}
+
+
+POST '/questions/search'
+- Fetches a dictionary of questions in which the keys are the ids and the values is the corresponding string of the question search term and listing the current category of this questions listed.
+- Request Arguments: An object with a key, question that contains a object of question: question_string key:value pairs.  
+- Returns: An object with a success key that contains a key:success_boolean and a key and a single current_category element, that contains a object of key: current_category_string key:value pairs a single total_questions element, that contains a object of key: total_questions_string key:value pairs a object of key: questions_array where of this inner array contains a object of question: question_string key:value pairs, answer: answer_string key:value pairs, category: category_id key:value pairs, difficulty: difficulty_id key:value pairs. 
+{
+  "current_category": "Science",
+  "questions": [
+    {
+      "answer": "second answer",
+      "category": 1,
+      "difficulty": 1,
+      "id": 2,
+      "question": "second question"
+    },
+    {
+      "answer": "four answer",
+      "category": 1,
+      "difficulty": 1,
+      "id": 4,
+      "question": "four question"
+    }
+  ],
+  "success": true,
+  "total_questions": 2
+}
+
+GET '/categories/<int:category_id>/questions'
+- Fetches a dictionary of questions based on category, only questions of that category to be shown.
+- Request Arguments: An object with a key, category that contains id of the category of the questions to liest: category_id key:value pairs.  
+- Returns: An object with a success key that contains a key:success_boolean and a key and a single current_category element, that contains a object of key: current_category_string key:value pairs a single total_questions element, that contains a object of key: total_questions_string key:value pairs a object of key: questions_array where of this inner array contains a object of question: question_string key:value pairs, answer: answer_string key:value pairs, category: category_id key:value pairs, difficulty: difficulty_id key:value pairs. 
+{
+  "current_category": "Science",
+  "questions": [
+    {
+      "answer": "second answer",
+      "category": 1,
+      "difficulty": 1,
+      "id": 2,
+      "question": "second question"
+    },
+    {
+      "answer": "four answer",
+      "category": 1,
+      "difficulty": 1,
+      "id": 4,
+      "question": "four question"
+    }
+  ],
+  "success": true,
+  "total_questions": 2
+}
+
+
+POST '/quizzes'
+- Fetches a dictionary of questions based on take category and previous question parameters and return a random questions within the given category, if provided, and that is not one of the previous questions.
+- Request Arguments: An object with a key, category that contains id of the category of the questions to list: category_id key:value pairs and previous question parameter that contains key of the previous_question of the questions to list: previous_question_string key:value pairs.
+- Returns: An object with a success key that contains a key:success_boolean and a key. A single previousQuestions element, that contains a object of key: previousQuestions_string key:value pairs. A object of key: questions_array where of this inner array contains a object of question: question_string key:value pairs, answer: answer_string key:value pairs, category: category_id key:value pairs, difficulty: difficulty_id key:value pairs. A object of key: currentQuestion_array where of this inner array contains a object of question: question_string key:value pairs, answer: answer_string key:value pairs, category: category_id key:value pairs, difficulty: difficulty_id key:value pairs. 
+{
+  "currentQuestion": {
+    "answer": "book",
+    "category": 6,
+    "difficulty": 2,
+    "id": 5,
+    "question": "object to read many pages?"
+  },
+  "previousQuestions": "second question",
+  "question": {
+    "answer": "sea",
+    "category": 6,
+    "difficulty": 2,
+    "id": 6,
+    "question": "place to travel in a ship"
+  },
+  "success": true
+}
+
 
 ```
 
