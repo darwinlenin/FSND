@@ -1,0 +1,60 @@
+{% extends 'layouts/main.html' %}
+{% block title %}Movie Search{% endblock %}
+{% block content %}
+<div class="row">
+	<div class="col-sm-6">
+		<h1 class="monospace">
+			{{ movie.name }}
+		</h1>
+		<button id="delete-button" class="btn btn-danger btn-lg" data-id="{{ movie.id }}">Remove movie</button>
+		<a href="/movies/{{ movie.id }}/edit"><button id="edit-button" class="btn btn-success btn-lg" data-id="{{ movie.id }}">Edit movie</button></a>
+		<p class="subtitle">
+			ID: {{ movie.id }}
+		</p>
+		<p>
+			<i class="fas fa-globe-americas"></i> {{ movie.name }}, {{ movie.name }}
+		</p>
+		<p>
+			<i class="fas fa-map-marker"></i> {% if movie.release_date %}{{ movie.release_date }}{% else %}Release date{% endif %}
+		</p>
+		<p>
+			<i class="fas fa-link"></i> {% if movie.website %}<a href="{{ movie.website }}" target="_blank">{{ movie.website }}</a>{% else %}No Website{% endif %}
+		</p>
+		<p>
+			<i class="fab fa-facebook-f"></i> {% if movie.facebook_link %}<a href="{{ movie.facebook_link }}" target="_blank">{{ movie.facebook_link }}</a>{% else %}No Facebook Link{% endif %}
+		</p>
+		{% if movie.seeking_talent %}
+		<div class="seeking">
+			<p class="lead">Currently seeking talent</p>
+			<div class="description">
+				<i class="fas fa-quote-left"></i> {{ movie.seeking_description }} <i class="fas fa-quote-right"></i>
+			</div>
+		</div>
+		{% else %}	
+		<p class="not-seeking">
+			<i class="fas fa-moon"></i> Not currently seeking talent
+		</p>
+		{% endif %}
+	</div>
+	<div class="col-sm-6">
+		<img src="{{ movie.image_link }}" alt="Movie Image" />
+	</div>
+</div>
+<script>
+const deleteBtns = document.querySelector('#delete-button');
+deleteBtns.onclick = function(e) {
+	const movie_id = e.target.dataset['id'];
+	console.log(venue_id);
+	fetch('/movies/' + movie_id, {
+		method: 'DELETE'
+	})
+	.then(function() {
+		
+	})
+}
+</script>
+
+{% endblock %}
+
+
+
